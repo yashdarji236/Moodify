@@ -1,5 +1,6 @@
-import React from "react";
+import React  , {useEffect, useState }from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./feature/auth/hooks/useAuth";
 /* ================= COMPONENTS ================= */
 
 const SidebarItem = ({ icon, label, active, danger }) => (
@@ -45,8 +46,32 @@ const BottomIcon = ({ icon, active, danger }) => (
 /* ================= MAIN DASHBOARD ================= */
 
 const Dashboard = () => {
+  const [username , Setusername] = useState("")
+  
   const usenavigate = useNavigate()
-  return (
+  
+  const {user , loading  , getMe} = useAuth()
+     useEffect(() => {
+        
+        if (!user && !loading) {
+            usenavigate('/login')
+        }
+    }, [user , loading])
+  
+  
+    useEffect(() => {
+  const fetchUser = async () => {
+    const res = await getMe();
+    console.log(res);
+    Setusername(res.user.username)
+  };
+
+  fetchUser();
+
+}, []);
+
+
+return (
     <div className="min-h-screen bg-zinc-900 text-white">
 
       {/* DESKTOP SIDEBAR (FIXED) */}
@@ -58,7 +83,7 @@ const Dashboard = () => {
             alt="Profile"
           />
           <div>
-            <h3 className="font-semibold">Alex Rivera</h3>
+            <h3 className="font-semibold">{username}</h3>
             <p className="text-xs text-zinc-400">Premium Member</p>
           </div>
         </div>
@@ -79,7 +104,7 @@ const Dashboard = () => {
         <header className="flex justify-between items-center py-6">
           <div>
             <p className="text-xs text-zinc-400">Welcome back</p>
-            <h1 className="text-lg font-bold">Username</h1>
+            <h1 className="text-lg font-bold">{username}</h1>
           </div>
 
           <button className="p-2 rounded-full bg-zinc-800">

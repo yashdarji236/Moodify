@@ -2,7 +2,7 @@ const userModel = require('../Model/auth.model')
 const jwt = require('jsonwebtoken')
 const bcryptjs = require('bcryptjs')
 const BlacListkModel = require("../Model/blacklist.model")
-
+const Redis = require("../config/cache")
 
 async function RegisterContoller(req,res){
     const {username , email , password} = req.body;
@@ -89,7 +89,7 @@ async function GetMe(req,res){
 async function Logout(req,res){
     const token = req.cookies.token
     res.clearCookie("token")
-    await BlacListkModel.create({token})
+    await Redis.set(token , `Black listed At ${Date.now().toString()}` , "Ex" , 60*60)
     res.status(201).json({
         message:"Logout successfully!"
     })

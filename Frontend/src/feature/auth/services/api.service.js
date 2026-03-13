@@ -36,3 +36,18 @@ export async function Login(username , password){
         }
     }
 }
+export async function logout(){
+    try{
+        const res = await api.get('/auth/logout')
+         return { success:true , data:res.data }
+    }catch(error){
+        return{
+            success:false,
+            message:error.response?.data?.message
+        }
+    }
+}
+export async function Getme(){
+    const res = await api.get('/auth/get-me')
+    return res.data
+}

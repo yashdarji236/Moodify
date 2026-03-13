@@ -1,36 +1,36 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {useAuth} from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuth'
 const Signup = () => {
 
   const usenavigate = useNavigate()
 
-  const [username , Setusername] = useState("")
-  const [email , Setemail] = useState("")
-  const [error , setError] = useState("")
-  const [password , Setpassword] = useState("")
-  const { register ,loading , user} = useAuth()
+  const [username, Setusername] = useState("")
+  const [email, Setemail] = useState("")
+  const [error, setError] = useState("")
+  const [password, Setpassword] = useState("")
+  const { register, loading, user } = useAuth()
 
-   if(loading){
-      return <main> <h1>Loading....</h1></main>
-    }
-  async function handleForm(e){
-    
+  if (loading) {
+    return <main> <h1>Loading....</h1></main>
+  }
+  async function handleForm(e) {
+
     e.preventDefault()
 
-    const res = await register(username , email , password)
-    if(res.success){
-        usenavigate('/',{
-          state:{
-             message: `Welcome  ${username} 👋`,
-        userName: username
-          }
-        })
-        
-    }else {
-    setError(res.message);
-  }
-   
+    const res = await register(username, email, password)
+    if (res.success) {
+      usenavigate('/', {
+        state: {
+          message: `Welcome  ${username} 👋`,
+          userName: username
+        }
+      })
+
+    } else {
+      setError(res.message);
+    }
+
   }
 
   return (
@@ -91,8 +91,8 @@ const Signup = () => {
               <input
                 type="text"
                 placeholder="Enter Username"
-                
-                 onInput={(e)=>{Setusername(e.target.value) , setError("")}} name="username"
+
+                onInput={(e) => { Setusername(e.target.value), setError("") }} name="username"
                 className="
                   w-full bg-white/5 border border-white/10
                   rounded-xl px-4 py-3 text-sm
@@ -112,7 +112,7 @@ const Signup = () => {
               <input
                 type="email"
                 placeholder="Enter the Email"
-                onInput={(e)=>{Setemail(e.target.value) , setError("")}} name="email"
+                onInput={(e) => { Setemail(e.target.value), setError("") }} name="email"
                 className="
                   w-full bg-white/5 border border-white/10
                   rounded-xl px-4 py-3 text-sm
@@ -132,7 +132,7 @@ const Signup = () => {
               <input
                 type="password"
                 placeholder="••••••••"
-                 onInput={(e)=>{Setpassword(e.target.value) , setError("")}} name="password"
+                onInput={(e) => { Setpassword(e.target.value), setError("") }} name="password"
                 className="
                   w-full bg-white/5 border border-white/10
                   rounded-xl px-4 py-3 text-sm
@@ -163,7 +163,7 @@ const Signup = () => {
             <p className="text-sm text-slate-500">
               Already have an account?{" "}
               <span
-                onClick={()=>usenavigate('/login')}
+                onClick={() => usenavigate('/login')}
                 className="text-primary cursor-pointer hover:underline"
               >
                 login
@@ -176,9 +176,9 @@ const Signup = () => {
         <p className="mt-8 text-center text-[10px] text-slate-600 uppercase tracking-widest lg:hidden">
           Privacy focused • Encrypted analysis
         </p>
-         
+
       </main>
-       {error && <p className=" absolute p-1.5 top-1.5 right-1.5 bg-red-500 text-white rounded-xl font-medium">{error}</p>}
+      {error && <p className=" absolute p-1.5 top-1.5 right-1.5 bg-red-500 text-white rounded-xl font-medium">{error}</p>}
     </div>
   )
 }

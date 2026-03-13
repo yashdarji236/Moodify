@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const BlackListe = require('../Model/blacklist.model')
-
+const Redis = require("../config/cache")
 async function IdentiFyUser(req,res,next){
-    const token = req.cookies.token
+    const token  = req.cookies.token?.trim()
 
 
     if(!token){
@@ -10,7 +10,7 @@ async function IdentiFyUser(req,res,next){
             message:"Token is not provided!"
         })
     }
-    const IstokenblackeListed = await BlackListe.findOne({token})
+    const IstokenblackeListed = await Redis.get(token , )
     if(IstokenblackeListed){
         return res.status(401).json({
             message:"Invalid Token"
