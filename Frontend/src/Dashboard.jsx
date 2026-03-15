@@ -141,11 +141,11 @@ return (
           <div className="relative rounded-3xl overflow-hidden">
             <img
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
-              className="h-[320px] w-full object-cover"
+              className="h-80 w-full object-cover"
               alt="Song"
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
 
             <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
               <div>

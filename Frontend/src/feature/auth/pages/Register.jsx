@@ -1,186 +1,185 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from "../hooks/useAuth";
+
 const Signup = () => {
-
-  const usenavigate = useNavigate()
-
-  const [username, Setusername] = useState("")
-  const [email, Setemail] = useState("")
-  const [error, setError] = useState("")
-  const [password, Setpassword] = useState("")
-  const { register, loading, user } = useAuth()
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { register, loading } = useAuth();
 
   if (loading) {
-    return <main> <h1>Loading....</h1></main>
+    return (
+      <main className="min-h-screen bg-[#212121] flex items-center justify-center">
+        <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      </main>
+    );
   }
+
   async function handleForm(e) {
-
-    e.preventDefault()
-
-    const res = await register(username, email, password)
+    e.preventDefault();
+    const res = await register(username, email, password);
     if (res.success) {
-      usenavigate('/', {
+      navigate("/", {
         state: {
-          message: `Welcome  ${username} 👋`,
-          userName: username
-        }
-      })
-
+          message: `Welcome ${username} 👋`,
+          userName: username,
+        },
+      });
     } else {
       setError(res.message);
     }
-
   }
 
   return (
-    <div
-      className="
-        min-h-[100vh]
-        bg-[#0A0A0A]
-        text-slate-100
-        flex flex-col
-        lg:flex-row
-        items-center
-        justify-center
-        gap-12
-        px-4 sm:px-6 lg:px-16
-        overflow-hidden
-        pb-[env(safe-area-inset-bottom)]
-      "
-    >
+    <div className="min-h-screen bg-[#212121] flex flex-col lg:flex-row">
 
-      {/* LEFT TEXT */}
-      <div className="relative z-10 w-full max-w-md text-center lg:text-left">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white">
-          Start Your Emotional Journey
-        </h1>
-
-        <p className="text-slate-400 text-sm sm:text-base mt-4 leading-relaxed">
-          Personalized soundscapes for every mood.
-        </p>
-
-        <p className="hidden lg:block mt-6 text-sm text-slate-500 max-w-sm">
-          MoodSync AI analyzes your facial expressions in real time and
-          adapts music to perfectly match how you feel — instantly.
-        </p>
+      {/* ── LEFT PANEL (image) ── */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-end">
+        <img
+          src="https://images.unsplash.com/photo-1614149162883-504ce4d13909?w=900&q=80"
+          alt="Mood visual"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        <div className="relative z-10 p-10 pb-12">
+          <p className="text-white/90 text-lg font-semibold leading-snug max-w-xs">
+            Start your emotional<br />journey today.
+          </p>
+          <p className="text-white/50 text-sm mt-2">
+            MoodSync AI · Real-time emotion soundscapes
+          </p>
+        </div>
       </div>
 
-      {/* RIGHT CARD */}
-      <main className="relative z-10 w-full max-w-sm sm:max-w-md">
+      {/* ── RIGHT PANEL (form) ── */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-14 lg:py-0">
 
-        <div
-          className="
-            bg-[#121212]/80
-            backdrop-blur-xl
-            border border-white/10
-            shadow-[0_0_50px_-12px_rgba(34,211,238,0.3)]
-            rounded-3xl
-            p-6 sm:p-8
-          "
-        >
-
-          <form className="space-y-5" onSubmit={handleForm}>
-
-            {/* USERNAME */}
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 ml-1">
-                Create Username
-              </label>
-
-              <input
-                type="text"
-                placeholder="Enter Username"
-
-                onInput={(e) => { Setusername(e.target.value), setError("") }} name="username"
-                className="
-                  w-full bg-white/5 border border-white/10
-                  rounded-xl px-4 py-3 text-sm
-                  focus:border-primary focus:ring-1 focus:ring-primary
-                  outline-none transition
-                  placeholder:text-slate-600
-                "
+        {/* Logo + title */}
+        <div className="mb-8 flex flex-col items-center gap-3">
+          <div className="w-11 h-11">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="19" stroke="white" strokeWidth="1.5" />
+              <path
+                d="M10 20 Q15 12 20 20 Q25 28 30 20"
+                stroke="white"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                fill="none"
               />
-            </div>
+            </svg>
+          </div>
+          <h1 className="text-white text-[1.6rem] font-bold tracking-[-0.02em]">
+            Create an account
+          </h1>
+        </div>
 
-            {/* EMAIL */}
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 ml-1">
-                Email
-              </label>
+        {/* Form */}
+        <div className="w-full max-w-[360px]">
+          <form onSubmit={handleForm} className="flex flex-col gap-3">
 
-              <input
-                type="email"
-                placeholder="Enter the Email"
-                onInput={(e) => { Setemail(e.target.value), setError("") }} name="email"
-                className="
-                  w-full bg-white/5 border border-white/10
-                  rounded-xl px-4 py-3 text-sm
-                  focus:border-primary focus:ring-1 focus:ring-primary
-                  outline-none transition
-                  placeholder:text-slate-600
-                "
-              />
-            </div>
+            {/* Username */}
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onInput={(e) => { setUsername(e.target.value); setError(""); }}
+              name="username"
+              required
+              className="
+                w-full bg-[#2f2f2f]
+                border border-[#3f3f3f]
+                hover:border-[#555555] focus:border-[#666666]
+                text-white text-sm rounded-xl px-4 py-3.5
+                outline-none transition-colors duration-150
+                placeholder:text-[#8e8ea0] caret-white
+              "
+            />
 
-            {/* PASSWORD */}
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 ml-1">
-                Create Password
-              </label>
+            {/* Email */}
+            <input
+              type="email"
+              placeholder="Email address"
+              value={email}
+              onInput={(e) => { setEmail(e.target.value); setError(""); }}
+              name="email"
+              required
+              className="
+                w-full bg-[#2f2f2f]
+                border border-[#3f3f3f]
+                hover:border-[#555555] focus:border-[#666666]
+                text-white text-sm rounded-xl px-4 py-3.5
+                outline-none transition-colors duration-150
+                placeholder:text-[#8e8ea0] caret-white
+              "
+            />
 
-              <input
-                type="password"
-                placeholder="••••••••"
-                onInput={(e) => { Setpassword(e.target.value), setError("") }} name="password"
-                className="
-                  w-full bg-white/5 border border-white/10
-                  rounded-xl px-4 py-3 text-sm
-                  focus:border-primary focus:ring-1 focus:ring-primary
-                  outline-none transition
-                  placeholder:text-slate-600
-                "
-              />
-            </div>
+            {/* Password */}
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onInput={(e) => { setPassword(e.target.value); setError(""); }}
+              name="password"
+              required
+              className="
+                w-full bg-[#2f2f2f]
+                border border-[#3f3f3f]
+                hover:border-[#555555] focus:border-[#666666]
+                text-white text-sm rounded-xl px-4 py-3.5
+                outline-none transition-colors duration-150
+                placeholder:text-[#8e8ea0] caret-white
+              "
+            />
 
-            {/* BUTTON */}
+            {/* Error */}
+            {error && (
+              <p className="text-[#ff6b6b] text-xs px-1 -mt-1">{error}</p>
+            )}
+
+            {/* Submit */}
             <button
               type="submit"
               className="
-                w-full bg-cyan-400
-                text-black font-bold py-4 rounded-2xl
-                shadow-[0_0_20px_rgba(34,211,238,0.3)]
-                transition active:scale-95
+                w-full mt-1
+                bg-white hover:bg-[#ececec] active:bg-[#d9d9d9]
+                text-[#212121] text-sm font-semibold
+                rounded-xl py-3.5
+                transition-colors duration-150 cursor-pointer
               "
             >
-              Create Account
+              Continue
             </button>
-
           </form>
 
-          {/* LOGIN LINK */}
-          <div className="mt-6 text-center">
-            <p className="text-sm text-slate-500">
-              Already have an account?{" "}
-              <span
-                onClick={() => usenavigate('/login')}
-                className="text-primary cursor-pointer hover:underline"
-              >
-                login
-              </span>
-            </p>
-          </div>
+          {/* Footer */}
+          <p className="text-center text-xs text-[#8e8ea0] mt-6">
+            Already have an account?{" "}
+            <span
+              onClick={() => navigate("/login")}
+              className="text-white font-medium cursor-pointer hover:underline underline-offset-2"
+            >
+              Log in
+            </span>
+          </p>
 
+          <p className="mt-5 text-center text-[11px] text-[#555] leading-relaxed">
+            By continuing, you agree to MoodSync's{" "}
+            <span className="underline underline-offset-2 cursor-pointer hover:text-[#888] transition-colors">
+              Terms of Service
+            </span>{" "}
+            and{" "}
+            <span className="underline underline-offset-2 cursor-pointer hover:text-[#888] transition-colors">
+              Privacy Policy
+            </span>.
+          </p>
         </div>
+      </div>
 
-        <p className="mt-8 text-center text-[10px] text-slate-600 uppercase tracking-widest lg:hidden">
-          Privacy focused • Encrypted analysis
-        </p>
-
-      </main>
-      {error && <p className=" absolute p-1.5 top-1.5 right-1.5 bg-red-500 text-white rounded-xl font-medium">{error}</p>}
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
