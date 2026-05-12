@@ -16,7 +16,7 @@ export default function FaceExpression({ onClick = () => { } }) {
         let cancelled = false;
 
         async function setup() {
-            try {
+            try {   
                 setInitStatus("loading");
                 await init({ landmarkerRef, videoRef, streamRef });
 

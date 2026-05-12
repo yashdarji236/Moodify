@@ -149,7 +149,7 @@ const Home = () => {
 
             {/* Featured Playlists */}
             <section>
-              <h2 className="text-white font-semibold text-base mb-4">Featured Playlists</h2>
+              <h2 className="text-white font-semibold text-base mb-4">Trending Songs</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {['Chill Vibes', 'Focus Mode', 'Happy Hours', 'Late Night'].map(name => (
                   <div key={name} className="bg-[#2f2f2f] hover:bg-[#3a3a3a] border border-[#3f3f3f] rounded-xl p-4 cursor-pointer transition-colors group">

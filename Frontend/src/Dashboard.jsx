@@ -1,4 +1,4 @@
-import React  , {useEffect, useState }from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./feature/auth/hooks/useAuth";
 /* ================= COMPONENTS ================= */
@@ -46,32 +46,32 @@ const BottomIcon = ({ icon, active, danger }) => (
 /* ================= MAIN DASHBOARD ================= */
 
 const Dashboard = () => {
-  const [username , Setusername] = useState("")
-  
+  const [username, Setusername] = useState("")
+
   const usenavigate = useNavigate()
-  
-  const {user , loading  , getMe} = useAuth()
-     useEffect(() => {
-        
-        if (!user && !loading) {
-            usenavigate('/login')
-        }
-    }, [user , loading])
-  
-  
-    useEffect(() => {
-  const fetchUser = async () => {
-    const res = await getMe();
-    console.log(res);
-    Setusername(res.user.username)
-  };
 
-  fetchUser();
+  const { user, loading, getMe } = useAuth()
+  useEffect(() => {
 
-}, []);
+    if (!user && !loading) {
+      usenavigate('/login')
+    }
+  }, [user, loading])
 
 
-return (
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await getMe();
+      console.log(res);
+      Setusername(res.user.username)
+    };
+
+    fetchUser();
+
+  }, []);
+
+
+  return (
     <div className="min-h-screen bg-zinc-900 text-white">
 
       {/* DESKTOP SIDEBAR (FIXED) */}
